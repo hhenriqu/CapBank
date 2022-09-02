@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Classes.Conta;
 import Enums.TipoContas;
+import Enums.TipoContas.enumContas;
 
 public class App {
 
@@ -44,12 +45,16 @@ public class App {
             switch(options)
             {
                 case 1:
+                verSaldo();
                 break;
                 case 2:
+                adicionarSaldo();
                 break;
                 case 3:
+                sacarSaldo();
                 break;
                 case 4:
+                transferirSaldo();
                 break;
                 case 5:
                 criarContas();
@@ -75,12 +80,18 @@ public class App {
     public static void criarContas(){
 
         Scanner leitor = new Scanner(System.in);
+        TipoContas.enumContas entradaTipoConta;
 
         System.out.println("Inserir nova conta");
 
         System.out.print("Digite 1 para Conta Poupança ou 2 para Conta Corrente: ");
-        int entradaTipoConta = leitor.nextInt();
-
+        int numTipoConta = leitor.nextInt();
+        if(numTipoConta == 1){
+            entradaTipoConta =  enumContas.CONTAPOUPANCA;
+        } else {
+            entradaTipoConta =  enumContas.CONTACORRENTE;
+        }
+        
         leitor.nextLine();
         System.out.print("Digite o Nome do Cliente: ");
         String entradaNome = leitor.nextLine();
@@ -95,7 +106,50 @@ public class App {
 
     public static void listarContas(){
         for (Conta conta : listContas) {
-            System.out.println("Numero da Conta "+ conta.hashCode());
+            System.out.println("Numero da Conta #"+ listContas.indexOf(conta) + " | " + conta.toString());
         }
+    }
+
+    public static void adicionarSaldo()
+    {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("Insira o Numero da sua conta:");
+        int numConta = leitor.nextInt();
+        System.out.println("Insira o valor a ser depositado:");
+        double valorDeposito = leitor.nextInt();
+
+        listContas.get(numConta).depositar(valorDeposito);
+    }
+
+    public static void verSaldo()
+    {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("Insira o Numero da sua conta:");
+        int numConta = leitor.nextInt();
+        listContas.get(numConta).getSaldo();
+    }
+
+    public static void sacarSaldo()
+    {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("Insira o Numero da sua conta:");
+        int numConta = leitor.nextInt();
+        System.out.println("Insira o valor a ser sacado:");
+        double valorSaque = leitor.nextInt();
+
+        listContas.get(numConta).sacar(valorSaque);
+    }
+
+    public static void transferirSaldo()
+    {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("Insira o Numero da sua conta:");
+        int numConta = leitor.nextInt();
+        System.out.println("Insira o valor a ser transferido:");
+        double valorTransferencia = leitor.nextInt();
+        System.out.println("Insira o Numero da conta destino:");
+        int numDestino = leitor.nextInt();
+
+        listContas.get(numConta).transferir(valorTransferencia, listContas.get(numDestino));
     }
 }
