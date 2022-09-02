@@ -1,0 +1,10 @@
+<h2>TWO WAY DATA BINDING</h2>
+<label for="valor">Valor</label>
+<input type="text" placeholder="0,00" [(ngModel)]="valor">
+<button type="button" (click)="parcelamento()">CALCULAR</button>
+<div>
+<p>Emprestando {{ valor }} você irá pagar:</p>
+<p>12x de {{ parcela12 }}</p>
+<p>6x de {{ parcela6 }}</p>
+<p>3x de {{ parcela3 }}</p>
+</div>
